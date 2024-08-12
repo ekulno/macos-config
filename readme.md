@@ -6,9 +6,30 @@ This page describes my MacOS system configuration. Some/most configurations are 
 
 Install the `brew` package manager, see https://brew.sh/ . Not all applications can be installed there, but many can. 
 
-Some essential packages: 
+Some essential packages, remove any which you don't use: 
 
-`brew install firefox slack alt-tab direnv python node kubectl gpg`
+```bash
+brew install \
+  firefox \
+  slack \
+  alt-tab \
+  direnv \
+  autojump \
+  python \
+  node \
+  kubectl \
+  ncdu \
+  ag \
+  jq \
+  yq \
+  gpg \
+  meld \
+  fdupes
+
+curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-completion.bash -o ~/.git-completion.bash
+```
+
+See https://docs.docker.com/desktop/install/mac-install/ for Docker. 
 
 ## Window management
 
@@ -41,6 +62,7 @@ MacOS has some configurability of keybindings in `System settings`->`Keyboards`,
    - If you experience unexpected keybindings in other applications, you can find the 'bundle name' (an app identifier in MacOS) for those apps and try to do the same for those.  
    - Remove the `Cmd+Tab => Cmd+Alt+0` rule, because it conflicts with our mapping from Alt/Cmd+Tab, which is more important. 
    - Modify the two mappings under the `Ctrl+(Shift)+Right/left arrow => Alt+(Shift)+Right/left arrow` rule to map to `left_command` instead of `left_option`. Seems like this is what's intended in the description, this might be a bug. 
+   - Add rule for `Ctrl+Backspace => Cmd+Backspace`
 
 This results in [./keybindings-karabiner.json]. 
 
@@ -51,3 +73,20 @@ Now go to `Complex Modifications` in Karabiner, then `Add predefined rule` and h
 The default shell is zsh. If you prefer bash, you can change it with `chsh -s /bin/bash`. `.profile` is called `.bash_profile` in MacOS. To get rid of the warning which will follow on every new shell, add `export BASH_SILENCE_DEPRECATION_WARNING=1` to your `.bash_profile`. 
 
 See my [`.bash_profile`](./.bash_profile) and [`./bashrc`](./bashrc). 
+
+## UI tweaks
+
+You can unpin items from the dock at the bottom of the screen by right-clicking them and selecting 'Remove from dock'. It's also possible to make the dock auto-hide. 
+
+The default file navigator is called Finder and seems impossible to remove. You can configure which directory shortcuts are present in its sidebar through its application settings (right click the Finder text in the upper left of your screen when a Finder window is in focus, and select Settings). 
+
+The download widget in the dock shows recent downloads in a curved list. If you don't like this, you can change it to render as a normal list through options found by right-clicking the widget. 
+
+## Mitigating trash file creation
+
+MacOS's built-in graphicla file navigation program 'Finder' creates trash files names `.DS_Store` throughout your system. These files store rendering configuration used by the Finder GUI. I haven't found any way to stop this very rude behavior, except for on networked or plugged-in devices. That's at least something. 
+
+```bash
+defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+defaults write com.apple.desktopservices DSDontWriteUSBStores -bool true
+```
