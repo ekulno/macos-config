@@ -3,7 +3,7 @@
 # configure the terminal to be remember many lines
 HISTSIZE=100000
 HISTFILESIZE=200000
-
+HISTCONTROL=ignoreboth:erasedups
 # activate direnv
 eval "$(direnv hook bash)"
 
@@ -34,7 +34,6 @@ NC="\[\033[00m\]"
 # formulate bash prompt
 PS1="$GREEN_LIGHT\u@\h$NC:$BLUE_LIGHT\w$RED_LIGHT\$(parse_git_branch)$YELLOW_LIGHT\$(parse_k8s_coords)$NC\$ "
 
-# formulate terminal tab text (doesn't work for iterm2)
 if [[ $TERM==xterm* ]]; then
     # terminal tab
     PS1="\[\e]0;\u@\h: \w\a\]$PS1"
