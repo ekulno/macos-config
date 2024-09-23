@@ -25,3 +25,4 @@ fi
 # activation of bashrc
 [ -r $HOME/.bashrc ] && source $HOME/.bashrc
 
+export PATH="$PATH:$HOME/.local/bin"
